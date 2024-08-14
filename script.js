@@ -1,7 +1,7 @@
 let musicas = [
-    {titulo:'Onde anda voce', artista:'Vinicius de Moraes & Toquinho', src:'musicas/onde-anda.mp3', img:'imagens/senpai.gif'},
-    {titulo:'Samba raiz', artista:'Bossa Nova Brasil', src:'musicas/violao.mp3', img:'imagens/violao.jpg'},
-    {titulo:'Música piano', artista:'John Green', src:'musicas/ar-livre.mp3', img:'imagens/ar-livre.jpg'}
+    {titulo:'Onde anda voce', artista:'Vinicius de Moraes & Toquinho', src:'onde-anda.MP3', img:'senpai.gif'},
+    {titulo:'Samba raiz', artista:'Bossa Nova Brasil', src:'violao.mp3', img:'violao.jpg'},
+    {titulo:'Música piano', artista:'John Green', src:'ar-livre.mp3', img:'ar-livre.jpg'}
 ];
 
 let musica = document.querySelector('audio');
