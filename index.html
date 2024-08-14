@@ -12,27 +12,27 @@
 </head>
 <body>
     <div class="tudo">
-        <img src="imagens/senpai.gif" alt="gif">
-        <div class="descricao">
-            <h2>Aperte o play</h2>
-            <i>Criado por Diego</i>
+    <img src="imagens/senpai.gif" alt="gif">
+    <div class="descricao">
+        <h2>Aperte o play</h2>
+        <i>Criado por Diego</i>
+    </div>
+    <div class="duracao">
+        <div class="barra">
+            <progress value="0" max="1"></progress>
+            <div class="ponto"></div>
+    </div>
+        <div class="tempo">
+            <p class="inicio">0:00</p>
+            <p class="fim">3:40</p>
         </div>
-        <div class="duracao">
-            <div class="barra">
-                <progress value="0" max="1"></progress>
-                <div class="ponto"></div>
-            </div>
-            <div class="tempo">
-                <p class="inicio">0:00</p>
-                <p class="fim">3:40</p>
-            </div>
-        </div>
-        <div class="player">
-            <i class="fas fa-step-backward setas anterior"></i>
-            <i class="fas fa-play-circle botao-play"></i>
-            <i class="fas fa-pause-circle botao-pause"></i>
-            <i class="fas fa-step-forward setas proxima"></i>
-        </div>  
+    </div>
+    <div class="player">
+        <i class="fas fa-step-backward setas anterior"></i>
+        <i class="fas fa-play-circle botao-play"></i>
+        <i class="fas fa-pause-circle botao-pause"></i>
+        <i class="fas fa-step-forward setas proxima"></i>
+    </div>  
     </div>
     <audio src="onde-anda.MP3"></audio>
 
@@ -44,121 +44,110 @@
     </div>
     
     <script>
+        
         let musicas = [
-            {titulo: 'Onde anda você', artista: 'Vinicius de Moraes & Toquinho', src: 'musicas/onde-anda.MP3', img: 'imagens/senpai.gif'},
-            {titulo: 'Coisas que eu sei', artista: 'Danni Carlos', src: 'musicas/coisas-que-sei.MP3', img: 'imagens/testa.gif'},
-            {titulo: 'Lisboa Madrid', artista: 'Ana Vitoria', src: 'musicas/lisboa-madrid.MP3', img: 'imagens/pistola.gif'},
-            {titulo: 'No Escuro', artista: 'Ana Gabriela', src: 'musicas/no-escuro.MP3', img: 'imagens/menina-castanho.gif'}
-        ];
+    {titulo: 'Onde anda você', artista: 'Vinicius de Moraes & Toquinho', src: 'musicas/onde-anda.MP3', img: 'imagens/senpai.gif'},
+    {titulo: 'Coisas que eu sei', artista: 'Danni Carlos', src: 'musicas/coisas-que-sei.MP3', img: 'imagens/testa.gif'},
+    {titulo: 'Lisboa Madrid', artista: 'Ana Vitoria', src: 'musicas/lisboa-madrid.MP3', img: 'imagens/pistola.gif'},
+    {titulo: 'No Escuro', artista: 'Ana Gabriela', src: 'musicas/no-escuro.MP3', img: 'imagens/menina-castanho.gif'}
+    
+];
 
-        let musica = document.querySelector('audio');
-        let indexMusica = 0;
+let musica = document.querySelector('audio');
+let indexMusica = 0;
 
-        let duracaoMusica = document.querySelector('.fim');
-        let imagem = document.querySelector('img');
-        let nomeMusica = document.querySelector('.descricao h2');
-        let nomeArtista = document.querySelector('.descricao i');
+let duracaoMusica = document.querySelector('.fim');
+let imagem = document.querySelector('img');
+let nomeMusica = document.querySelector('.descricao h2');
+let nomeArtista = document.querySelector('.descricao i');
 
-        // Renderiza a música inicial
-        renderizarMusica(indexMusica);
+// Renderiza a música inicial
+renderizarMusica(indexMusica);
 
-        // Adiciona eventos aos botões
-        document.querySelector('.botao-play').addEventListener('click', tocarMusica);
-        document.querySelector('.botao-pause').addEventListener('click', pausarMusica);
-        musica.addEventListener('timeupdate', atualizarBarra);
+// Adiciona eventos aos botões
+document.querySelector('.botao-play').addEventListener('click', tocarMusica);
+document.querySelector('.botao-pause').addEventListener('click', pausarMusica);
+musica.addEventListener('timeupdate', atualizarBarra);
 
-        document.querySelector('.anterior').addEventListener('click', () => {
-            indexMusica--;
-            if (indexMusica < 0) {
-                indexMusica = musicas.length - 1;
-            }
+document.querySelector('.anterior').addEventListener('click', () => {
+    indexMusica--;
+    if (indexMusica < 0) {
+        indexMusica = musicas.length - 1;
+    }
+    renderizarMusica(indexMusica);
+});
+
+document.querySelector('.proxima').addEventListener('click', () => {
+    indexMusica++;
+    if (indexMusica >= musicas.length) {
+        indexMusica = 0;
+    }
+    renderizarMusica(indexMusica);
+});
+
+// Função para renderizar a lista de músicas
+function renderizarListaMusicas() {
+    const listaMusicas = document.getElementById('lista-musicas');
+    listaMusicas.innerHTML = '';
+
+    musicas.forEach((musica, index) => {
+        const li = document.createElement('li');
+        li.textContent = musica.titulo;
+        li.addEventListener('click', () => {
+            indexMusica = index;
             renderizarMusica(indexMusica);
         });
+        listaMusicas.appendChild(li);
+    });
+}
 
-        document.querySelector('.proxima').addEventListener('click', () => {
-            indexMusica++;
-            if (indexMusica >= musicas.length) {
-                indexMusica = 0;
-            }
-            renderizarMusica(indexMusica);
-        });
+// Função para renderizar uma música
+function renderizarMusica(index) {
+    musica.setAttribute('src', musicas[index].src);
+    musica.addEventListener('loadeddata', () => {
+        nomeMusica.textContent = musicas[index].titulo;
+        nomeArtista.textContent = musicas[index].artista;
+        imagem.src = musicas[index].img;
+        duracaoMusica.textContent = segundosParaMinutos(Math.floor(musica.duration));
+        tocarMusica(); // Começa a tocar a música automaticamente
+    });
+}
 
-        // Função para renderizar a lista de músicas
-        function renderizarListaMusicas() {
-            const listaMusicas = document.getElementById('lista-musicas');
-            listaMusicas.innerHTML = '';
+// Função para tocar a música
+function tocarMusica() {
+    musica.play();
+    document.querySelector('.botao-pause').style.display = 'block';
+    document.querySelector('.botao-play').style.display = 'none';
+}
 
-            musicas.forEach((musica, index) => {
-                const li = document.createElement('li');
-                li.textContent = musica.titulo;
-                li.addEventListener('click', () => {
-                    indexMusica = index;
-                    renderizarMusica(indexMusica);
-                });
-                listaMusicas.appendChild(li);
-            });
-        }
+// Função para pausar a música
+function pausarMusica() {
+    musica.pause();
+    document.querySelector('.botao-pause').style.display = 'none';
+    document.querySelector('.botao-play').style.display = 'block';
+}
 
-        // Função para renderizar uma música
-        function renderizarMusica(index) {
-            musica.setAttribute('src', musicas[index].src);
-            musica.addEventListener('loadeddata', () => {
-                nomeMusica.textContent = musicas[index].titulo;
-                nomeArtista.textContent = musicas[index].artista;
-                imagem.src = musicas[index].img;
-                duracaoMusica.textContent = segundosParaMinutos(Math.floor(musica.duration));
+// Função para atualizar a barra de progresso
+function atualizarBarra() {
+    let barra = document.querySelector('progress');
+    barra.style.width = Math.floor((musica.currentTime / musica.duration) * 100) + '%';
+    let tempoDecorrido = document.querySelector('.inicio');
+    tempoDecorrido.textContent = segundosParaMinutos(Math.floor(musica.currentTime));
+}
 
-                // Garantir que a música inicie automaticamente
-                musica.play().then(() => {
-                    document.querySelector('.botao-pause').style.display = 'block';
-                    document.querySelector('.botao-play').style.display = 'none';
-                }).catch(() => {
-                    // Se o navegador bloqueia a reprodução automática, apenas atualiza os botões
-                    document.querySelector('.botao-pause').style.display = 'block';
-                    document.querySelector('.botao-play').style.display = 'none';
-                });
-            });
-        }
+// Função para converter segundos em minutos
+function segundosParaMinutos(segundos) {
+    let campoMinutos = Math.floor(segundos / 60);
+    let campoSegundos = segundos % 60;
+    if (campoSegundos < 10) {
+        campoSegundos = '0' + campoSegundos;
+    }
+    return campoMinutos + ':' + campoSegundos;
+}
 
-        // Função para tocar a música
-        function tocarMusica() {
-            musica.play().then(() => {
-                document.querySelector('.botao-pause').style.display = 'block';
-                document.querySelector('.botao-play').style.display = 'none';
-            }).catch(() => {
-                // Se o navegador bloqueia a reprodução automática, apenas atualiza os botões
-                document.querySelector('.botao-pause').style.display = 'block';
-                document.querySelector('.botao-play').style.display = 'none';
-            });
-        }
+// Inicializa a lista de músicas
+renderizarListaMusicas();
 
-        // Função para pausar a música
-        function pausarMusica() {
-            musica.pause();
-            document.querySelector('.botao-pause').style.display = 'none';
-            document.querySelector('.botao-play').style.display = 'block';
-        }
-
-        // Função para atualizar a barra de progresso
-        function atualizarBarra() {
-            let barra = document.querySelector('progress');
-            barra.value = (musica.currentTime / musica.duration) * 100;
-            let tempoDecorrido = document.querySelector('.inicio');
-            tempoDecorrido.textContent = segundosParaMinutos(Math.floor(musica.currentTime));
-        }
-
-        // Função para converter segundos em minutos
-        function segundosParaMinutos(segundos) {
-            let campoMinutos = Math.floor(segundos / 60);
-            let campoSegundos = segundos % 60;
-            if (campoSegundos < 10) {
-                campoSegundos = '0' + campoSegundos;
-            }
-            return campoMinutos + ':' + campoSegundos;
-        }
-
-        // Inicializa a lista de músicas
-        renderizarListaMusicas();
     </script>
 </body>
 </html>
