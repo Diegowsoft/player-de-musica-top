@@ -12,27 +12,27 @@
 </head>
 <body>
     <div class="tudo">
-    <img src="imagens/senpai.gif" alt="gif">
-    <div class="descricao">
-        <h2>Aperte o play</h2>
-        <i>Criado por Diego Fagundes</i>
-    </div>
-    <div class="duracao">
-        <div class="barra">
-            <progress value="0" max="1"></progress>
-            <div class="ponto"></div>
+        <img src="imagens/senpai.gif" alt="gif">
+        <div class="descricao">
+            <h2>Aperte o play</h2>
+            <i>Criado por Diego</i>
         </div>
-        <div class="tempo">
-            <p class="inicio">0:00</p>
-            <p class="fim">3:40</p>
+        <div class="duracao">
+            <div class="barra">
+                <progress value="0" max="1"></progress>
+                <div class="ponto"></div>
+            </div>
+            <div class="tempo">
+                <p class="inicio">0:00</p>
+                <p class="fim">3:40</p>
+            </div>
         </div>
-    </div>
-    <div class="player">
-        <i class="fas fa-step-backward setas anterior"></i>
-        <i class="fas fa-play-circle botao-play"></i>
-        <i class="fas fa-pause-circle botao-pause"></i>
-        <i class="fas fa-step-forward setas proxima"></i>
-    </div>  
+        <div class="player">
+            <i class="fas fa-step-backward setas anterior"></i>
+            <i class="fas fa-play-circle botao-play"></i>
+            <i class="fas fa-pause-circle botao-pause"></i>
+            <i class="fas fa-step-forward setas proxima"></i>
+        </div>  
     </div>
     <audio src="onde-anda.MP3"></audio>
 
@@ -107,14 +107,29 @@
                 nomeArtista.textContent = musicas[index].artista;
                 imagem.src = musicas[index].img;
                 duracaoMusica.textContent = segundosParaMinutos(Math.floor(musica.duration));
+
+                // Garantir que a música inicie automaticamente
+                musica.play().then(() => {
+                    document.querySelector('.botao-pause').style.display = 'block';
+                    document.querySelector('.botao-play').style.display = 'none';
+                }).catch(() => {
+                    // Se o navegador bloqueia a reprodução automática, apenas atualiza os botões
+                    document.querySelector('.botao-pause').style.display = 'block';
+                    document.querySelector('.botao-play').style.display = 'none';
+                });
             });
         }
 
         // Função para tocar a música
         function tocarMusica() {
-            musica.play();
-            document.querySelector('.botao-pause').style.display = 'block';
-            document.querySelector('.botao-play').style.display = 'none';
+            musica.play().then(() => {
+                document.querySelector('.botao-pause').style.display = 'block';
+                document.querySelector('.botao-play').style.display = 'none';
+            }).catch(() => {
+                // Se o navegador bloqueia a reprodução automática, apenas atualiza os botões
+                document.querySelector('.botao-pause').style.display = 'block';
+                document.querySelector('.botao-play').style.display = 'none';
+            });
         }
 
         // Função para pausar a música
@@ -147,4 +162,3 @@
     </script>
 </body>
 </html>
-
