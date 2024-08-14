@@ -109,9 +109,14 @@ function renderizarMusica(index) {
         nomeArtista.textContent = musicas[index].artista;
         imagem.src = musicas[index].img;
         duracaoMusica.textContent = segundosParaMinutos(Math.floor(musica.duration));
-        tocarMusica(); // Começa a tocar a música automaticamente
+
+        // Verifica se a música está pausada e a inicia se necessário
+        if (musica.paused) {
+            musica.play();
+        }
     });
 }
+
 
 // Função para tocar a música
 function tocarMusica() {
