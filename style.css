@@ -1,0 +1,114 @@
+@charset "UTF-8";
+
+ html {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #009e91bc;
+    color: #ddd;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.tudo {
+    background-color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    border-radius: 10px;
+}
+
+img {
+    width: 300px;
+    height: 300px;
+    border-radius: 5px;
+    background-size: cover;
+
+}
+
+.descricao {
+    width: 300px;
+}
+
+h2 {
+    margin-bottom: 5px;
+}
+
+.duracao {
+    width: 300px;
+    margin-top: 25px;
+}
+
+.barra {  /*Barra vazia*/
+    width: 300px;
+    height: 6px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+progress {
+    height: 6px;
+    width: 0%;
+    background-color: #333;
+}
+
+.ponto {
+    width: 20px;
+    height: 20px;
+    background-color: #eee;
+    border-radius: 50%;
+    margin-left: -10px;
+}
+
+.tempo {
+    display: flex;
+    width: 300px;
+    justify-content: space-between;
+}
+
+.player {
+    width: 300px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.botao-play, .botao-pause {
+    font-size: 50px;
+    cursor: pointer;
+
+}
+.botao-play:hover {
+    background-color: rgb(112, 112, 112);
+    border-radius: 50%;
+}
+
+.botao-pause:hover {
+    background-color: rgb(112, 112, 112);
+    border-radius: 50%;
+}
+
+.setas {
+    font-size: 40px;
+    cursor: pointer;
+}
+
+.setas:hover {
+    background-color: rgb(112, 112, 112);
+    border-radius: 10px;
+}
+
+.botao-pause {
+    display: none;
+}
+
+
